@@ -1,69 +1,236 @@
 import Image from "next/image";
+import {
+  EMAIL, EMAIL_GRUPPI, MAPS_URL, PHONE, REVIEWS, SHOP_URL,
+  attractions, food, foodPhotos, groups, hero, routes, season, services, stats, ticketsExtra,
+} from "./content";
+import Attractions from "./ui/Attractions";
+import Effects from "./ui/Effects";
+import Nav from "./ui/Nav";
+import Pricing from "./ui/Pricing";
+
+const Arrow = () => (
+  <svg width="40" height="12" viewBox="0 0 40 12" fill="none" aria-hidden="true">
+    <path d="M0 6h38M33 1l5 5-5 5" stroke="currentColor" strokeWidth="1.4" />
+  </svg>
+);
+
+const WORD = "ACQUATICA";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <a className="skip" href="#main">Vai al contenuto</a>
+      <Effects />
+      <Nav />
+
+      <main id="main">
+        {/* HERO — riferimento: titolo spaziato su foto virata blu */}
+        <section className="hero" id="top">
+          <div className="hero__bg">
+            <Image src={hero.photo} alt={hero.alt} fill preload sizes="100vw" placeholder="blur" />
+          </div>
+          <div className="hero__tint" aria-hidden="true" />
+          <div className="hero__caustics" aria-hidden="true" />
+
+          <div className="wrap hero__body">
+            <h1>
+              <span className="hero__word" aria-label="Acquatica Park">
+                {WORD.split("").map((c, i) => (
+                  <span key={i} className="ch" style={{ ["--i" as string]: i }} aria-hidden="true">{c}</span>
+                ))}
+              </span>
+              <span className="hero__sub" data-enter style={{ ["--d" as string]: ".8s" }}>
+                Il parco acquatico di Milano
+              </span>
+            </h1>
+            <p className="hero__fact" data-enter style={{ ["--d" as string]: ".95s" }}>
+              {attractions.length} attrazioni d&apos;acqua su oltre 100.000 m² a Quinto Romano, a un autobus dalla M1.
+            </p>
+            <div className="hero__actions" data-enter style={{ ["--d" as string]: "1.1s" }}>
+              <a className="btn" href={SHOP_URL}>
+                Compra il biglietto <span className="price">da 23 €</span>
+              </a>
+              <a className="link-play" href="#attrazioni">
+                <span className="dot" aria-hidden="true">
+                  <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><path d="M6 0v12M1 7l5 5 5-5" stroke="currentColor" strokeWidth="1.6" /></svg>
+                </span>
+                <span>Guarda le attrazioni</span>
+              </a>
+            </div>
+          </div>
+
+          <div className="wrap hero__foot" data-enter style={{ ["--d" as string]: "1.3s" }}>
+            <div className="hero__season">
+              <span className="hero__live"><b>{season.label}</b>&nbsp;{season.dates}</span>
+              <span><b>Tutti i giorni</b> {season.hours}</span>
+              <span>{season.pools}</span>
+            </div>
+            <div className="hero__note">
+              Kamikaze da 19 metri, 340 metri di Fiume Lento e una laguna tutta per i più piccoli. Il biglietto online costa un euro in meno.
+              <br />
+              <a href="#biglietti" className="ulink">Vedi il listino <Arrow /></a>
+            </div>
+          </div>
+        </section>
+
+        <div className="marquee" aria-hidden="true">
+          <div className="marquee__track">
+            {[...attractions, ...attractions].map((a, i) => <span key={i}>{a.name}</span>)}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+
+        {/* NUMERI + ATTRAZIONI */}
+        <section className="block" id="attrazioni" aria-labelledby="attr-h">
+          <div className="wrap">
+            <div className="stats" data-reveal aria-label="Il parco in numeri">
+              {stats.map((s) => (
+                <div className="stat" key={s.label}>
+                  <div className="stat__v">
+                    {s.prefix && <span className="pre">{s.prefix}</span>}
+                    <span data-count={s.value}>{s.value.toLocaleString("it-IT")}</span>
+                    <small>{s.unit}</small>
+                  </div>
+                  <p className="stat__l">{s.label}</p>
+                </div>
+              ))}
+            </div>
+            <div style={{ marginTop: "clamp(96px, 12vw, 160px)" }} id="attr-h">
+              <Attractions />
+            </div>
+          </div>
+        </section>
+
+        {/* BIGLIETTI */}
+        <section className="block" id="biglietti">
+          <div className="wrap">
+            <Pricing />
+            <dl className="extras" data-reveal>
+              {ticketsExtra.map((x) => (
+                <div key={x.name}><dt>{x.name}</dt><dd>{x.price}</dd></div>
+              ))}
+            </dl>
+            <p className="reviews">
+              <strong>{REVIEWS.score}/5</strong>
+              <span>
+                su {REVIEWS.count} recensioni di chi ha comprato su{" "}
+                <a className="ulink" href={REVIEWS.href} target="_blank" rel="noopener">{REVIEWS.source}</a>
+              </span>
+            </p>
+          </div>
+        </section>
+
+        {/* LA GIORNATA */}
+        <section className="block" id="giornata">
+          <div className="wrap">
+
+            <h2 className="h2">Quattro posti dove mangiare, e un prato per il tuo picnic.</h2>
+            <div className="day">
+              <div className="day__photos">
+                {foodPhotos.map((f, i) => (
+                  <figure key={i} data-reveal style={{ ["--k" as string]: i }}>
+                    <Image src={f.photo} alt={f.alt} sizes="(max-width: 960px) 50vw, 330px" placeholder="blur" />
+                  </figure>
+                ))}
+              </div>
+              <div data-reveal>
+                <p className="list-title">Ristoro</p>
+                <ul className="list">
+                  {food.map((f) => <li key={f.name}><b>{f.name}</b><span>{f.text}</span></li>)}
+                </ul>
+                <p className="list-title">Servizi</p>
+                <ul className="list">
+                  {services.map((s) => <li key={s.name}><b>{s.name}</b><span>{s.text}</span></li>)}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* COME ARRIVARE */}
+        <section className="block" id="arrivare">
+          <div className="wrap">
+            <p className="eyebrow">Come arrivare</p>
+            <h2 className="visit__addr">
+              Via Gaetano Airaghi,
+              <span>Quinto Romano, Milano</span>
+            </h2>
+            <div className="routes">
+              {routes.map((r, i) => (
+                <div className="route" key={r.stop} data-reveal style={{ ["--k" as string]: i }}>
+                  <div className="route__line">
+                    <span className="route__m" style={{ background: r.color }}>{r.line}</span>
+                    {r.stop}
+                  </div>
+                  <div className="route__path" style={{ ["--k" as string]: i }} aria-hidden="true" />
+                  <p className="route__bus" style={{ margin: 0 }}>poi bus <b>{r.bus}</b> fino a Quinto Romano</p>
+                </div>
+              ))}
+            </div>
+            <p className="visit__car">In auto: Tangenziale Ovest, uscita San Siro / Fiera Milano. Parcheggio al parco o gratuito a pochi passi.</p>
+            <div className="visit__actions">
+              <a className="btn" href={MAPS_URL} target="_blank" rel="noopener">Apri le indicazioni</a>
+              <a className="link-play" href={PHONE.href}>
+                <span className="dot" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z" /></svg>
+                </span>
+                <span>Chiama {PHONE.label}</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* FESTE E GRUPPI */}
+        <section className="block" id="feste" style={{ paddingTop: 0 }}>
+          <div className="wrap">
+            <div className="groups" data-reveal>
+              <div>
+
+                <h2 className="h2">La tua festa a bordo vasca, con lo staff di animazione.</h2>
+                <p className="lead">Mandaci il modulo almeno 48 ore prima: ti rispondiamo noi con la conferma.</p>
+                <div style={{ marginTop: 32 }}>
+                  <a className="btn btn--sun" href="#contatti">Scrivi per la tua festa</a>
+                </div>
+              </div>
+              <ul>
+                {groups.items.map((g) => <li key={g}>{g}</li>)}
+              </ul>
+            </div>
+          </div>
+        </section>
       </main>
-    </div>
+
+      <footer className="footer">
+        <div className="wrap">
+          <div className="footer__grid">
+            <div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="Acquatica Park" width={110} height={71} style={{ marginBottom: 18 }} />
+              <p>Via Gaetano Airaghi, Quinto Romano, Milano</p>
+            </div>
+            <div>
+              <h4>Orari</h4>
+              <p>{season.dates}</p>
+              <p>{season.hours}, {season.pools}</p>
+              <p>{season.closed}</p>
+            </div>
+            <div>
+              <h4 id="contatti">Contatti</h4>
+              <a className="ulink" href={PHONE.href}>{PHONE.label}</a><br />
+              <a className="ulink" href={`mailto:${EMAIL}`}>{EMAIL}</a><br />
+              <a className="ulink" href={`mailto:${EMAIL_GRUPPI}`}>{EMAIL_GRUPPI}</a>
+            </div>
+            <div>
+              <h4>Biglietti</h4>
+              <a className="ulink" href={SHOP_URL}>Compra online</a><br />
+              <a className="ulink" href="#biglietti">Listino 2026</a>
+            </div>
+          </div>
+          <div className="footer__bottom">
+            <span><span className="preview">Anteprima</span>Mock non ufficiale, non indicizzato. Foto: acquaticapark.it (Jody Parisi).</span>
+            <span>Proposta di Alpwise Studio</span>
+          </div>
+        </div>
+      </footer>
+    </>
   );
 }

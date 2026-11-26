@@ -3,74 +3,26 @@ import {
   EMAIL, EMAIL_GRUPPI, MAPS_URL, PHONE, REVIEWS, SHOP_URL,
   attractions, food, foodPhotos, groups, hero, routes, season, services, stats, ticketsExtra,
 } from "./content";
+import A11y from "./ui/A11y";
 import Attractions from "./ui/Attractions";
 import Effects from "./ui/Effects";
 import Nav from "./ui/Nav";
+import HeroVideo from "./ui/HeroVideo";
 import Pricing from "./ui/Pricing";
-
-const Arrow = () => (
-  <svg width="40" height="12" viewBox="0 0 40 12" fill="none" aria-hidden="true">
-    <path d="M0 6h38M33 1l5 5-5 5" stroke="currentColor" strokeWidth="1.4" />
-  </svg>
-);
-
-const WORD = "ACQUATICA";
 
 export default function Home() {
   return (
     <>
       <a className="skip" href="#main">Vai al contenuto</a>
       <Effects />
+      <A11y />
       <Nav />
 
       <main id="main">
-        {/* HERO — riferimento: titolo spaziato su foto virata blu */}
-        <section className="hero" id="top">
-          <div className="hero__bg">
-            <Image src={hero.photo} alt={hero.alt} fill preload sizes="100vw" placeholder="blur" />
-          </div>
-          <div className="hero__tint" aria-hidden="true" />
-          <div className="hero__caustics" aria-hidden="true" />
-
-          <div className="wrap hero__body">
-            <h1>
-              <span className="hero__word" aria-label="Acquatica Park">
-                {WORD.split("").map((c, i) => (
-                  <span key={i} className="ch" style={{ ["--i" as string]: i }} aria-hidden="true">{c}</span>
-                ))}
-              </span>
-              <span className="hero__sub" data-enter style={{ ["--d" as string]: ".8s" }}>
-                Il parco acquatico di Milano
-              </span>
-            </h1>
-            <p className="hero__fact" data-enter style={{ ["--d" as string]: ".95s" }}>
-              {attractions.length} attrazioni d&apos;acqua su oltre 100.000 m² a Quinto Romano, a un autobus dalla M1.
-            </p>
-            <div className="hero__actions" data-enter style={{ ["--d" as string]: "1.1s" }}>
-              <a className="btn" href={SHOP_URL}>
-                Compra il biglietto <span className="price">da 23 €</span>
-              </a>
-              <a className="link-play" href="#attrazioni">
-                <span className="dot" aria-hidden="true">
-                  <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><path d="M6 0v12M1 7l5 5 5-5" stroke="currentColor" strokeWidth="1.6" /></svg>
-                </span>
-                <span>Guarda le attrazioni</span>
-              </a>
-            </div>
-          </div>
-
-          <div className="wrap hero__foot" data-enter style={{ ["--d" as string]: "1.3s" }}>
-            <div className="hero__season">
-              <span className="hero__live"><b>{season.label}</b>&nbsp;{season.dates}</span>
-              <span><b>Tutti i giorni</b> {season.hours}</span>
-              <span>{season.pools}</span>
-            </div>
-            <div className="hero__note">
-              Kamikaze da 19 metri, 340 metri di Fiume Lento e una laguna tutta per i più piccoli. Il biglietto online costa un euro in meno.
-              <br />
-              <a href="#biglietti" className="ulink">Vedi il listino <Arrow /></a>
-            </div>
-          </div>
+        {/* HERO — solo il video del sito ufficiale */}
+        <section className="hero hero--video" id="top">
+          <h1 className="sr-only">Acquatica Park, il parco acquatico di Milano a Quinto Romano</h1>
+          <HeroVideo src={hero.video} poster={hero.photo.src} />
         </section>
 
         <div className="marquee" aria-hidden="true">
@@ -101,7 +53,7 @@ export default function Home() {
         </section>
 
         {/* BIGLIETTI */}
-        <section className="block" id="biglietti">
+        <section className="block block--light" id="biglietti">
           <div className="wrap">
             <Pricing />
             <dl className="extras" data-reveal>
@@ -147,7 +99,7 @@ export default function Home() {
         </section>
 
         {/* COME ARRIVARE */}
-        <section className="block" id="arrivare">
+        <section className="block block--light" id="arrivare">
           <div className="wrap">
             <p className="eyebrow">Come arrivare</p>
             <h2 className="visit__addr">
@@ -180,7 +132,7 @@ export default function Home() {
         </section>
 
         {/* FESTE E GRUPPI */}
-        <section className="block" id="feste" style={{ paddingTop: 0 }}>
+        <section className="block" id="feste">
           <div className="wrap">
             <div className="groups" data-reveal>
               <div>

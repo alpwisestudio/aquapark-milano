@@ -41,6 +41,8 @@ export const season = {
 };
 
 export const hero = {
+  // video della home di acquaticapark.it (40 MB, servito dal loro streaming)
+  video: "https://streaming.matematici.com/acquatica/home/ap26.mp4",
   photo: homeFoam,
   alt: "Tre ragazze scendono insieme sullo scivolo largo, tra gli spruzzi d'acqua",
 };
